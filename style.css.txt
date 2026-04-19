@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Chrome Autofill Override (Fixes ugly white/yellow backgrounds on inputs) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #1a1a1a inset !important;
+    -webkit-text-fill-color: white !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+/* --- CINEMATIC HARDWARE ACCELERATED BACKGROUND --- */
+.cinematic-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: #030303;
+    overflow: hidden;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.4;
+    transform: translateZ(0); /* Force GPU */
+}
+
+.orb-1 {
+    width: 60vw;
+    height: 60vw;
+    background: #c9001e;
+    top: -20vw;
+    left: -10vw;
+    animation: float1 25s ease-in-out infinite alternate;
+}
+
+.orb-2 {
+    width: 50vw;
+    height: 50vw;
+    background: #4d000c;
+    bottom: -20vw;
+    right: -10vw;
+    animation: float2 30s ease-in-out infinite alternate;
+}
+
+.noise-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+}
+
+@keyframes float1 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(10vw, 10vw) scale(1.1); }
+}
+
+@keyframes float2 {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-10vw, -5vw) scale(1.2); }
+}
+
+/* --- GLASSMORPHISM UTILS --- */
+.glass {
+    background: rgba(20, 20, 20, 0.4);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+}
+
+/* --- PREMIUM INPUTS (Floating Labels) --- */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.premium-input {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.premium-input:focus {
+    background: rgba(0, 0, 0, 0.6);
+    border-color: #E60023;
+    box-shadow: 0 0 0 1px rgba(230,0,35,0.4), inset 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.premium-label {
+    top: 16px;
+    font-size: 14px;
+    transition: all 0.2s ease-out;
+}
+
+.premium-input:focus ~ .premium-label,
+.premium-input:not(:placeholder-shown) ~ .premium-label {
+    top: -10px;
+    left: 10px;
+    font-size: 11px;
+    color: #E60023;
+    background: #0d0d0d;
+    padding: 0 4px;
+    border-radius: 4px;
+}
+
+/* --- VIEW ROUTING ANIMATIONS --- */
+.auth-view, .app-view {
+    display: none;
+    opacity: 0;
+}
+.auth-view.active {
+    display: flex;
+    animation: fadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.app-view.active {
+    display: block;
+    animation: fadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- TOAST --- */
+.toast-hidden {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+    pointer-events: none;
+}
+.toast-visible {
+    opacity: 1 !important;
+    transform: translate(-50%, 0) !important;
+}
+
+/* --- SCROLLBAR --- */
+.custom-scrollbar::-webkit-scrollbar { width: 8px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background-color: transparent; border-radius: 10px; }
+.custom-scrollbar:hover::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.2); }
+
+/* --- COMPONENT STATES --- */
+.app-nav-btn.active {
+    background: rgba(255,255,255,0.05);
+    color: white !important;
+}
+.app-nav-btn.active .lucide { color: white; }
+
+.track-card:hover img { transform: scale(1.08); }
+.track-card:hover .play-overlay { opacity: 1; transform: translateY(0); }
+.play-overlay { transform: translateY(10px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
